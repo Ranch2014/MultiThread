@@ -14,7 +14,7 @@ GCD中有2个核心概念：
 1. 任务：执行什么操作  
 2. 队列：用来存放任务
 
-```
+``` Objective-C
 // 1.定制任务:确定想做的事情
 // 2.将任务添加到队列中:GCD会自动将队列中的任务取出，放到对应的线程中执行。
 Tips：任务的取出遵循队列的FIFO原则：先进先出，后进后出
@@ -72,7 +72,7 @@ dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAU
 ####二、串行队列（Serial Dispatch Queue）
 - 让任务一个接着一个地执行（一个任务执行完毕后，再执行下一个任务）
 
-```
+``` Objective-C
 // 使用 dispatch_queue_create 函数创建串行队列（队列类型传递NULL或者DISPATCH_QUEUE_SERIAL）
 dispatch_queue_t queue = dispatch_queue_create("queue", NULL);
 dispatch_queue_t queue = dispatch_queue_create("queue", DISPATCH_QUEUE_SERIAL);
@@ -105,41 +105,41 @@ dispatch_queue_t queue = dispatch_get_main_queue();
 ###一、线程间通信
 
 ``` Objective-C
-	// 从子线程回到主线程
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        // 执行耗时的异步操作
-        dispatch_async(dispatch_get_main_queue(), ^{
-           // 回到主线程，执行 UI 刷新操作
-        });
-    });
+// 从子线程回到主线程
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+	// 执行耗时的异步操作
+	dispatch_async(dispatch_get_main_queue(), ^{
+		// 回到主线程，执行 UI 刷新操作
+	});
+});
 ```
 
 ###二、延时操作
 
 ``` Objective-C
-	//延时执行
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        //2秒后执行这里的代码...
-    });
+//延时执行
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+	// 2秒后执行这里的代码...
+});
 ```
 
 ###三、一次性代码
 
 ``` Objective-C
-	// 使用 dispatch_once 函数能保证某段代码在程序运行过程中只被执行1次
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		// 只执行1次的代码(这里面默认是线程安全的)    
-	});
+// 使用 dispatch_once 函数能保证某段代码在程序运行过程中只被执行1次
+static dispatch_once_t onceToken;
+dispatch_once(&onceToken, ^{
+	// 只执行1次的代码(这里面默认是线程安全的)    
+});
 ```
 
 ###四、快速迭代
 
 ``` Objective-C
-	// 使用dispatch_apply函数能进行快速迭代遍历
-    dispatch_apply(10, dispatch_get_global_queue(0, 0), ^(size_t index){
-        // 执行10次代码，index 顺序不确定
-    });
+// 使用dispatch_apply函数能进行快速迭代遍历
+dispatch_apply(10, dispatch_get_global_queue(0, 0), ^(size_t index){
+	// 执行10次代码，index 顺序不确定
+});
 ```
 
 ###五、队列组
