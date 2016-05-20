@@ -48,7 +48,7 @@ NSOperation 可以调用 start 方法来执行任务，但默认是同步执行�
 
 ###1. NSInvocationOperation 子类
 
-```
+``` Objective-C
 // 初始化 NSInvocationOperation 对象
 - (id)initWithTarget:(id)target selector:(SEL)sel object:(id)arg;
 
@@ -62,7 +62,7 @@ NSOperation 可以调用 start 方法来执行任务，但默认是同步执行�
 
 ###2. NSBlockOperation 子类
 
-```
+``` Objective-C
 // 1.创建 NSBlockOperation 对象
 + (id)blockOperationWithBlock:(void (^)(void))block;
 
@@ -75,7 +75,7 @@ NSOperation 可以调用 start 方法来执行任务，但默认是同步执行�
 
 ###3. 自定义 NSOperation 子类
 
-```
+``` Objective-C
 // 创建对象继承 NSOperation，重写 main 方法，在里面实现要执行的操作
 - (void)main；
 ```
@@ -96,14 +96,14 @@ NSOperation 可以调用 start 方法来执行任务，但默认是同步执行�
 ###1. 最大并发数
 NSOperationQueue 可以通过对最大并发数设置，控制程序中线程的数量
 
-```
-// 最大并发数的相关方法 ?????????
+``` Objective-C
+// 最大并发数的相关方法
 - (NSInteger)maxConcurrentOperationCount;
 - (void)setMaxConcurrentOperationCount:(NSInteger)cnt;
 ```
 ###2. 取消/暂停/恢复
 
-```
+``` Objective-C
 // 1.取消队列的所有操作
 - (void)cancelAllOperations;
 // 2.取消单个操作
@@ -116,7 +116,7 @@ NSOperationQueue 可以通过对最大并发数设置，控制程序中线程的
 ###3. 依赖
 NSOperation 之间可以设置依赖来保证执行顺序。
 
-```
+``` Objective-C
 // 添加依赖的方法
 - (void)addDependency:(NSOperation *)op;
 
@@ -130,7 +130,7 @@ NSOperation 之间可以设置依赖来保证执行顺序。
 
 ###4. 操作的监听
 
-```
+``` Objective-C
 // 可以监听一个操作的执行完毕
 - (void (^)(void))completionBlock;
 - (void)setCompletionBlock:(void (^)(void))block;
@@ -141,6 +141,6 @@ NSOperation 之间可以设置依赖来保证执行顺序。
 参考：  
 [http://www.jianshu.com/p/c40067a51d96](http://www.jianshu.com/p/c40067a51d96)  
 [http://www.jianshu.com/p/73f3ade4fb3f](http://www.jianshu.com/p/73f3ade4fb3f)  
-[http://blog.csdn.net/chenyufeng1991/article/details/50281515](http://blog.csdn.net/chenyufeng1991/article/details/50281515)
+[http://blog.csdn.net/chenyufeng1991/article/details/50281515](http://blog.csdn.net/chenyufeng1991/article/details/50281515)  
 [http://www.jianshu.com/p/72a5c434dbce](http://www.jianshu.com/p/72a5c434dbce)  
 官方文档
