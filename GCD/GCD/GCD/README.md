@@ -56,8 +56,8 @@ dispatch_queue_t queue = dispatch_queue_create("queue", DISPATCH_QUEUE_CONCURREN
 // 使用 dispatch_get_global_queue 函数获得全局的并发队列
 dispatch_queue_t dispatch_get_global_queue(long identifier, unsigned long flags);
 /* 参数: dispatch_queue_priority_t priority (队列的优先级)
-		unsigned long flags (此参数暂时无用，用0即可)
- */
+unsigned long flags (此参数暂时无用，用0即可)
+*/
 
 // 示例代码
 dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -107,11 +107,11 @@ dispatch_queue_t queue = dispatch_get_main_queue();
 ``` Objective-C
 // 从子线程回到主线程
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-	// 执行耗时的异步操作
-	
-	dispatch_async(dispatch_get_main_queue(), ^{
-		// 回到主线程，执行 UI 刷新操作
-	});
+// 执行耗时的异步操作
+
+dispatch_async(dispatch_get_main_queue(), ^{
+// 回到主线程，执行 UI 刷新操作
+});
 });
 ```
 
@@ -120,7 +120,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 ``` Objective-C
 //延时执行
 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-	// 2秒后执行这里的代码...
+// 2秒后执行这里的代码...
 });
 ```
 
@@ -130,7 +130,7 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), 
 // 使用 dispatch_once 函数能保证某段代码在程序运行过程中只被执行1次
 static dispatch_once_t onceToken;
 dispatch_once(&onceToken, ^{
-	// 只执行1次的代码(这里面默认是线程安全的)    
+// 只执行1次的代码(这里面默认是线程安全的)    
 });
 ```
 
@@ -139,7 +139,7 @@ dispatch_once(&onceToken, ^{
 ``` Objective-C
 // 使用dispatch_apply函数能进行快速迭代遍历
 dispatch_apply(10, dispatch_get_global_queue(0, 0), ^(size_t index){
-	// 执行10次代码，index 顺序不确定
+// 执行10次代码，index 顺序不确定
 });
 ```
 
@@ -150,14 +150,14 @@ dispatch_apply(10, dispatch_get_global_queue(0, 0), ^(size_t index){
 dispatch_group_t group =  dispatch_group_create();
 
 dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    // 执行1个耗时的异步操作
+// 执行1个耗时的异步操作
 });
 dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    // 执行1个耗时的异步操作
+// 执行1个耗时的异步操作
 });
 
 dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-    // 等前面的异步操作都执行完毕后，回到主线程...
+// 等前面的异步操作都执行完毕后，回到主线程...
 });
 ```
 
