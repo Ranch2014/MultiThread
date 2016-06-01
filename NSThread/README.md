@@ -18,7 +18,7 @@ NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(run)
 
 主线程相关方法：
 
-```
+``` Objective-C
 // 返回主线程
 + (NSThread *)mainThread;
 
@@ -42,10 +42,10 @@ NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(run)
 其他方法：
 
 ``` Objective-C
-//获取主线程
+// 获取主线程
 NSThread *current = [NSThread mainThread];
 
-//获取当前线程
+// 获取当前线程
 NSThread *current = [NSThread currentThread];
 
 // 线程休眠，可以模拟耗时操作
