@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		46A8C4F21CFDBCF00071C30C /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 46A8C4F11CFDBCF00071C30C /* README.md */; settings = {ASSET_TAGS = (); }; };
 		46DFA8F91CE5F7A60068D8E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46DFA8F81CE5F7A60068D8E0 /* main.m */; };
 		46DFA8FC1CE5F7A60068D8E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46DFA8FB1CE5F7A60068D8E0 /* AppDelegate.m */; };
 		46DFA8FF1CE5F7A60068D8E0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46DFA8FE1CE5F7A60068D8E0 /* ViewController.m */; };
@@ -36,7 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		46A8C4F11CFDBCF00071C30C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = GCD/README.md; sourceTree = "<group>"; };
 		46DFA8F41CE5F7A60068D8E0 /* GCD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46DFA8F81CE5F7A60068D8E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		46DFA8FA1CE5F7A60068D8E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 				46DFA9101CE5F7A60068D8E0 /* GCDTests */,
 				46DFA91B1CE5F7A60068D8E0 /* GCDUITests */,
 				46DFA8F51CE5F7A60068D8E0 /* Products */,
-				46A8C4F11CFDBCF00071C30C /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -275,7 +272,6 @@
 			files = (
 				46DFA8FF1CE5F7A60068D8E0 /* ViewController.m in Sources */,
 				46DFA8FC1CE5F7A60068D8E0 /* AppDelegate.m in Sources */,
-				46A8C4F21CFDBCF00071C30C /* README.md in Sources */,
 				46DFA8F91CE5F7A60068D8E0 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

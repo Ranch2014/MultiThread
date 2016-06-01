@@ -49,7 +49,7 @@
     
     // 创建串行队列
     dispatch_queue_t queue2 = dispatch_queue_create("queue", DISPATCH_QUEUE_SERIAL);
-    //    dispatch_queue_t queue2 = dispatch_queue_create("queue", NULL); //串行队列
+//    dispatch_queue_t queue2 = dispatch_queue_create("queue", NULL); //串行队列
     
     // 获得全局并发队列
     dispatch_queue_t queue3 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -159,16 +159,29 @@
 
 /** 信号量 */
 - (void)dispatchSemaphore {
-    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-        NSLog(@"John");
-    });
+//    dispatch_semaphore_t sema = dispatch_semaphore_create(1);
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+//        NSLog(@"John");
+//    });
+//    
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        NSLog(@"Snow");
+//        dispatch_semaphore_signal(sema);
+//    });
     
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSLog(@"Snow");
-        dispatch_semaphore_signal(sema);
-    });
+//    dispatch_semaphore_t lock = dispatch_semaphore_create(1);
+//    for (int i=0; i<10; i++) {
+//        dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+//
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            NSLog(@"%d", i);
+//            dispatch_semaphore_signal(lock);
+//        });
+//    }
+    
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    
 }
 
 /** 同一个线程中的不同任务实现同步 */

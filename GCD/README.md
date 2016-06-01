@@ -42,7 +42,7 @@ dispatch_barrier_async(dispatch_queue_t queue, dispatch_block_t block);
 2. 异步：可以在新的线程中执行任务，具备开启新线程的能力  
 
 ###队列
-####一、并发队列（Concurrent Dispatch Queue）
+####1. 并发队列（Concurrent Dispatch Queue）
 - 可以让多个任务并发（同时）执行（自动开启多个线程同时执行任务）
 - 并发功能只有在异步（dispatch_async）函数下才有效
 
@@ -69,7 +69,7 @@ dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAU
 #define DISPATCH_QUEUE_PRIORITY_BACKGROUND INT16_MIN // 后台
 ```
 
-####二、串行队列（Serial Dispatch Queue）
+####2. 串行队列（Serial Dispatch Queue）
 - 让任务一个接着一个地执行（一个任务执行完毕后，再执行下一个任务）
 
 ``` Objective-C
@@ -82,7 +82,7 @@ dispatch_queue_t queue = dispatch_get_main_queue();
 ```
 注意：主队列是GCD自带的一种特殊的串行队列，放在主队列中的任务，都会放到主线程中执行。
 
-####三、各种队列的执行效果
+####3. 各种队列的执行效果
 
 ![](http://upload-images.jianshu.io/upload_images/718760-c940a7f854626235.png)
 
@@ -102,7 +102,7 @@ dispatch_queue_t queue = dispatch_get_main_queue();
 - 串行：一个任务执行完毕后，再执行下一个任务
 
 ##GCD 运用
-###一、线程间通信
+###1. 线程间通信
 
 ``` Objective-C
 // 从子线程回到主线程
@@ -115,7 +115,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 });
 ```
 
-###二、延时操作
+###2. 延时操作
 
 ``` Objective-C
 //延时执行
@@ -124,7 +124,7 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), 
 });
 ```
 
-###三、一次性代码
+###3. 一次性代码
 
 ``` Objective-C
 // 使用 dispatch_once 函数能保证某段代码在程序运行过程中只被执行1次
@@ -134,7 +134,7 @@ dispatch_once(&onceToken, ^{
 });
 ```
 
-###四、快速迭代
+###4. 快速迭代
 
 ``` Objective-C
 // 使用dispatch_apply函数能进行快速迭代遍历
@@ -143,7 +143,7 @@ dispatch_apply(10, dispatch_get_global_queue(0, 0), ^(size_t index){
 });
 ```
 
-###五、队列组
+###5. 队列组
 
 ``` Objective-C
 // 分别异步执行2个耗时的操作、2个异步操作都执行完毕后，再回到主线程执行操作
@@ -161,8 +161,31 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 });
 ```
 
+###6. 信号量
+
+当我们在处理一系列线程的时候，当数量达到一定量，在以前我们可能会选择使用 `NSOperationQueue` 来处理并发控制，但如何在GCD中快速的控制并发呢？答案就是`dispatch_semaphore`.
+
+示例代码：
+
+``` Objective-C
+dispatch_semaphore_t lock = dispatch_semaphore_create(1);
+for (int i=0; i<10; i++) {
+	dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
+
+	dispatch_async(dispatch_get_global_queue(0, 0), ^{
+		NSLog(@"%d", i);
+		dispatch_semaphore_signal(lock);
+	});
+}
+```
+`dispatch_semaphore_create(1)`: 创建一个 semaphore，信号总量为1
+`dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER)`: 如果信号总量为0，进入等待状态；信号量大于0时，继续执行代码，同时将信号总量 -1
+`dispatch_semaphore_signal(sema)`: 发送信号量，信号量 +1
 
 
-非原创，原文请移步 [iOS 多线程（二）GCD](http://www.jianshu.com/p/be70bd238af0)  
 
-代码参考：[http://blog.csdn.net/chenyufeng1991/article/details/51283183](http://blog.csdn.net/chenyufeng1991/article/details/51283183)
+
+主要参考：  
+[http://www.jianshu.com/p/be70bd238af0](http://www.jianshu.com/p/be70bd238af0)  
+[http://blog.csdn.net/chenyufeng1991/article/details/51283183](http://blog.csdn.net/chenyufeng1991/article/details/51283183)  
+[http://www.jianshu.com/p/098328f17ff6](http://www.jianshu.com/p/098328f17ff6)
