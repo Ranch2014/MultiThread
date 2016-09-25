@@ -13,7 +13,7 @@
 - (void)main {
     @autoreleasepool {
 //        NSLog(@"MyOperation--%@", [NSThread currentThread]);
-        NSLog(@"MyOperation %i--开始", self.operationID);
+        NSLog(@"MyOperation %i--开始 %@", self.operationID, [NSThread currentThread]);
         [NSThread sleepForTimeInterval:3];
         NSLog(@"MyOperation %i--结束", self.operationID);
     }

@@ -20,7 +20,7 @@
 //    [self testOther];
     
 //    [self sync];
-//    [self async];
+    [self async];
     
 //    [self dispatchOnce];
 //    [self dispatchApply];
@@ -64,48 +64,73 @@
 - (void)sync {
 //    dispatch_sync(dispatch_queue queue, dispatch_block_t block); //方法名
     
-    // 创建一个并发队列，并同步执行
+    // 创建一个并发队列，并同步执行 (不开新线程，顺序执行)
     dispatch_queue_t syncQueue = dispatch_queue_create("syncQueue", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_sync(syncQueue, ^{
-        NSLog(@"2");
-        [NSThread sleepForTimeInterval:3];
-        NSLog(@"3");
-    });
-    NSLog(@"4");
+//    dispatch_sync(syncQueue, ^{
+//        NSLog(@"2");
+//        [NSThread sleepForTimeInterval:3];
+//        NSLog(@"3");
+//    });
+//    NSLog(@"4");
+
+    for (NSInteger index = 0; index < 10; index ++) {
+        dispatch_sync(syncQueue, ^{
+//            NSLog(@"%@--->%zd", [NSThread currentThread], index);
+        });
+    }
     
-    // 创建一个串行队列，并同步执行
+    // 创建一个串行队列，并同步执行 (不开新线程，顺序执行)
     dispatch_queue_t syncQueue2 = dispatch_queue_create("syncQueue2", DISPATCH_QUEUE_SERIAL);
-    dispatch_sync(syncQueue2, ^{
-        NSLog(@"2");
-        [NSThread sleepForTimeInterval:3];
-        NSLog(@"3");
-    });
-    NSLog(@"4");
+//    dispatch_sync(syncQueue2, ^{
+//        NSLog(@"2");
+//        [NSThread sleepForTimeInterval:3];
+//        NSLog(@"3");
+//    });
+//    NSLog(@"4");
+    
+    for (NSInteger index = 0; index < 10; index ++) {
+        dispatch_sync(syncQueue2, ^{
+            NSLog(@"%@--->%zd", [NSThread currentThread], index);
+        });
+    }
 }
 
 /** 异步执行方法 */
 - (void)async {
 //    dispatch_async(dispatch_queue_t queue, dispatch_block_t block); //方法名
     
-    // 创建一个并发队列，异步执行
+    // 创建一个并发队列，异步执行 (开多条线程，执行顺序不确定)
     dispatch_queue_t asyncQueue = dispatch_queue_create("myAsyncQueue", DISPATCH_QUEUE_CONCURRENT);
-    dispatch_async(asyncQueue, ^{
-        NSLog(@"2");
-        
-        [NSThread sleepForTimeInterval:3];
-        NSLog(@"3");
-    });
-    NSLog(@"4");
+//    dispatch_async(asyncQueue, ^{
+//        NSLog(@"2");
+//        
+//        [NSThread sleepForTimeInterval:3];
+//        NSLog(@"3");
+//    });
+//    NSLog(@"4");
+
+    for (NSInteger index = 0; index < 10; index ++) {
+        dispatch_async(asyncQueue, ^{
+//            NSLog(@"%@--->%zd", [NSThread currentThread], index);
+        });
+    }
     
-    // 创建一个串行队列，异步执行
-    dispatch_queue_t asyncQueue2 = dispatch_queue_create("myAsyncQueue", DISPATCH_QUEUE_SERIAL);
-    dispatch_async(asyncQueue2, ^{
-        NSLog(@"2");
-        
-        [NSThread sleepForTimeInterval:3];
-        NSLog(@"3");
-    });
-    NSLog(@"4");
+    // 创建一个串行队列，异步执行 (开一条线程，顺序执行)
+    dispatch_queue_t asyncQueue2 = dispatch_queue_create("myAsyncQueue2", DISPATCH_QUEUE_SERIAL);
+    
+    for (NSInteger index = 0; index < 10; index ++) {
+        dispatch_async(asyncQueue2, ^{
+            NSLog(@"%@--->%zd", [NSThread currentThread], index);
+        });
+    }
+    
+//    dispatch_async(asyncQueue2, ^{
+//        NSLog(@"22");
+//        
+//        [NSThread sleepForTimeInterval:3];
+//        NSLog(@"33");
+//    });
+//    NSLog(@"44");
 }
 
 /** 一次性执行某个操作，并在应用生命周期内仅执行一次 */

@@ -14,7 +14,7 @@ GCD中有2个核心概念：
 1. 任务：执行什么操作  
 2. 队列：用来存放任务
 
-``` Objective-C
+``` C
 // 1.定制任务:确定想做的事情
 // 2.将任务添加到队列中:GCD会自动将队列中的任务取出，放到对应的线程中执行。
 Tips：任务的取出遵循队列的FIFO原则：先进先出，后进后出
@@ -23,7 +23,7 @@ Tips：任务的取出遵循队列的FIFO原则：先进先出，后进后出
 ###任务
 ####一、执行任务
 
-``` Objective-C
+``` C
 - queue: 队列
 - block: 任务
 
@@ -46,7 +46,7 @@ dispatch_barrier_async(dispatch_queue_t queue, dispatch_block_t block);
 - 可以让多个任务并发（同时）执行（自动开启多个线程同时执行任务）
 - 并发功能只有在异步（dispatch_async）函数下才有效
 
-``` Objective-C
+``` C
 // 使用 dispatch_queue_create 函数创建队列 (参数：队列名称，队列的类型)
 dispatch_queue_t dispatch_queue_create(const char *label, dispatch_queue_attr_t attr); 
 
@@ -72,7 +72,7 @@ dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAU
 ####2. 串行队列（Serial Dispatch Queue）
 - 让任务一个接着一个地执行（一个任务执行完毕后，再执行下一个任务）
 
-``` Objective-C
+``` C
 // 使用 dispatch_queue_create 函数创建串行队列（队列类型传递NULL或者DISPATCH_QUEUE_SERIAL）
 dispatch_queue_t queue = dispatch_queue_create("queue", NULL);
 dispatch_queue_t queue = dispatch_queue_create("queue", DISPATCH_QUEUE_SERIAL);
@@ -104,7 +104,7 @@ dispatch_queue_t queue = dispatch_get_main_queue();
 ##GCD 运用
 ###1. 线程间通信
 
-``` Objective-C
+``` c
 // 从子线程回到主线程
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 	// 执行耗时的异步操作
@@ -117,7 +117,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 ###2. 延时操作
 
-``` Objective-C
+``` c
 //延时执行
 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 	// 2秒后执行这里的代码...
@@ -126,7 +126,7 @@ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), 
 
 ###3. 一次性代码
 
-``` Objective-C
+``` C
 // 使用 dispatch_once 函数能保证某段代码在程序运行过程中只被执行1次
 static dispatch_once_t onceToken;
 dispatch_once(&onceToken, ^{
@@ -136,7 +136,7 @@ dispatch_once(&onceToken, ^{
 
 ###4. 快速迭代
 
-``` Objective-C
+``` C
 // 使用dispatch_apply函数能进行快速迭代遍历
 dispatch_apply(10, dispatch_get_global_queue(0, 0), ^(size_t index){
 	// 执行10次代码，index 顺序不确定
@@ -145,7 +145,7 @@ dispatch_apply(10, dispatch_get_global_queue(0, 0), ^(size_t index){
 
 ###5. 队列组
 
-``` Objective-C
+``` C
 // 分别异步执行2个耗时的操作、2个异步操作都执行完毕后，再回到主线程执行操作
 dispatch_group_t group =  dispatch_group_create();
 
@@ -167,7 +167,7 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 
 示例代码：
 
-``` Objective-C
+``` C
 dispatch_semaphore_t lock = dispatch_semaphore_create(1);
 for (int i=0; i<10; i++) {
 	dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
@@ -184,8 +184,9 @@ for (int i=0; i<10; i++) {
 
 
 
-
 主要参考：  
 [http://www.jianshu.com/p/be70bd238af0](http://www.jianshu.com/p/be70bd238af0)  
 [http://blog.csdn.net/chenyufeng1991/article/details/51283183](http://blog.csdn.net/chenyufeng1991/article/details/51283183)  
-[http://www.jianshu.com/p/098328f17ff6](http://www.jianshu.com/p/098328f17ff6)
+[http://www.jianshu.com/p/098328f17ff6](http://www.jianshu.com/p/098328f17ff6)  
+
+[http://blog.csdn.net/yi_zz32/article/details/49955637](http://blog.csdn.net/yi_zz32/article/details/49955637)  

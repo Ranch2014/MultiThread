@@ -27,9 +27,9 @@
 
     [self initQueue];
     [self testThread];
-    [self testInvocation];
-    [self testBlockOperation];
-    [self downloadImage];
+//    [self testInvocation];
+//    [self testBlockOperation];
+//    [self downloadImage];
 }
 
 /**
@@ -54,17 +54,17 @@
     NSInvocationOperation *inOperation = [[NSInvocationOperation alloc] initWithTarget:self
                                                                               selector:@selector(run)
                                                                                 object:nil];
-    [inOperation start]; //启动操作 (主线程执行)
+//    [inOperation start]; //启动操作 (主线程执行)
     
-//    NSInvocationOperation *inOperation2 = [[NSInvocationOperation alloc] initWithTarget:self
-//                                                                              selector:@selector(run)
-//                                                                                object:nil];
-//    NSInvocationOperation *inOperation3 = [[NSInvocationOperation alloc] initWithTarget:self
-//                                                                              selector:@selector(run)
-//                                                                                object:nil];
-//    [self.queue addOperation:inOperation]; //不同的子线程中执行
-//    [self.queue addOperation:inOperation2];
-//    [self.queue addOperation:inOperation3];
+    NSInvocationOperation *inOperation2 = [[NSInvocationOperation alloc] initWithTarget:self
+                                                                              selector:@selector(run)
+                                                                                object:nil];
+    NSInvocationOperation *inOperation3 = [[NSInvocationOperation alloc] initWithTarget:self
+                                                                              selector:@selector(run)
+                                                                                object:nil];
+    [self.queue addOperation:inOperation]; //不同的子线程中执行
+    [self.queue addOperation:inOperation2];
+    [self.queue addOperation:inOperation3];
 }
 
 - (void)run {
@@ -88,13 +88,13 @@
         NSLog(@"NSBlockOperation_2--%@", [NSThread currentThread]);
     }];
     
-//    [blockOperation addExecutionBlock:^{
-//        NSLog(@"NSBlockOperation_3--%@", [NSThread currentThread]);
-//    }];
-//    
-//    [blockOperation addExecutionBlock:^{
-//        NSLog(@"NSBlockOperation_4--%@", [NSThread currentThread]);
-//    }];
+    [blockOperation addExecutionBlock:^{
+        NSLog(@"NSBlockOperation_3--%@", [NSThread currentThread]);
+    }];
+    
+    [blockOperation addExecutionBlock:^{
+        NSLog(@"NSBlockOperation_4--%@", [NSThread currentThread]);
+    }];
     
     [blockOperation start];
 }
@@ -113,9 +113,9 @@
     operation2.operationID = 2;
     [operation2 setQueuePriority:NSOperationQueuePriorityVeryHigh];
     
-    [operation2 addDependency:operation1]; //设置操作之间的依赖
+//    [operation2 addDependency:operation1]; //设置操作之间的依赖
     
-    [self.queue addOperation:operation1];
+    [self.queue addOperation:operation1]; //添加到队列
     [self.queue addOperation:operation2];
     
     NSArray *operationArray = [self.queue operations]; //查看队列中的所有任务

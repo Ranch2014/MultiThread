@@ -17,9 +17,14 @@ NSOperation 就是一个操作，准确的说就是一个任务，也相当于�
 NSOperation 可以调用 start 方法来执行任务，但默认是同步执行的。  
 如果将 NSOperation 添加到 NSOperationQueue（操作队列）中，系统会自动异步执行 NSOperationQueue 中的操作。
 
-``` Objective-C
+``` objective-c
 // 将 NSOperation 对象添加操作到 NSOperationQueue 的方法
 - (void)addOperation:(NSOperation *)op;
+
+//添加一组 options
+- (void)addOperations:(NSArray<NSOperation *> *)ops waitUntilFinished:(BOOL)wait NS_AVAILABLE(10_6, 4_0);
+
+//添加 block 形式的 operation
 - (void)addOperationWithBlock:(void (^)(void))block;
 ```
 
@@ -33,18 +38,20 @@ NSOperation 可以调用 start 方法来执行任务，但默认是同步执行�
 
 ###NSOperationQueue 中的两种队列
 - 主队列  
-	通过 mainQueue 获得，凡是放到主队列中的任务都将在主线程执行
+  通过 mainQueue 获得，凡是放到主队列中的任务都将在主线程执行
 - 非主队列  
-	直接 alloc init 出来的队列。非主队列同时具备了并发和串行的功能，通过设置最大并发数属性来控制任务是并发执行还是串行执行。具备新开线程能力
+  直接 alloc init 出来的队列。非主队列同时具备了并发和串行的功能，通过设置最大并发数属性来控制任务是并发执行还是串行执行。具备新开线程能力
 
 
 
 ##NSOperation 使用
-- 使用 NSOperation 子类的方式有3种：
+使用 NSOperation 子类的方式有3种：
 
-		1. NSInvocationOperation 子类
-		2. NSBlockOperation 子类
-		3. 自定义子类继承 NSOperation，并实现内部相应的方法
+​	1. 使用 NSInvocationOperation 子类
+
+​	2. 使用 NSBlockOperation 子类
+
+​	3. 自定义子类继承 NSOperation，并实现内部相应的方法
 
 ###1. NSInvocationOperation 子类
 
@@ -143,4 +150,6 @@ NSOperation 之间可以设置依赖来保证执行顺序。
 [http://www.jianshu.com/p/73f3ade4fb3f](http://www.jianshu.com/p/73f3ade4fb3f)  
 [http://blog.csdn.net/chenyufeng1991/article/details/50281515](http://blog.csdn.net/chenyufeng1991/article/details/50281515)  
 [http://www.jianshu.com/p/72a5c434dbce](http://www.jianshu.com/p/72a5c434dbce)  
+[http://blog.csdn.net/q199109106q/article/details/8566222#comments](http://blog.csdn.net/q199109106q/article/details/8566222#comments)  
+
 官方文档
