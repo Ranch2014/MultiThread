@@ -29,7 +29,7 @@
     [self testThread];
 //    [self testInvocation];
 //    [self testBlockOperation];
-//    [self downloadImage];
+    [self downloadImage];
 }
 
 /**
